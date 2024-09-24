@@ -8,59 +8,57 @@ use App\Models\Feedback;
 
 class FeedbackController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $users = Feedback::all();
+        return view('feedbacks.index', compact('feedbacks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('feedbacks.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreFeedbackRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'text' => 'required|max:255',
+        ]);
+
+        Feedback::create($validatedData);
+
+        return redirect()->route('feedbacks.index')->with('success', 'feedback created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Feedback $feedback)
+    public function show($id)
     {
-        //
+        $feedback = Feedback::findOrFail($id);
+        return view('feedbacks.show', compact('feedback'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Feedback $feedback)
+    public function edit($id)
     {
-        //
+        $feedback = Feedback::findOrFail($id);
+        return view('feedbacks.edit', compact('feedback'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFeedbackRequest $request, Feedback $feedback)
+    public function update(UpdateFeedbackRequest $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'text' => 'required|max:255',
+        ]);
+
+        $feedback = Feedback::findOrFail($id);
+        $feedback->update($validatedData);
+
+        return redirect()->route('feedbacks.index')->with('success', 'Feedback updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Feedback $feedback)
+    public function destroy($id)
     {
-        //
+        $feedback = Feedback::findOrFail($id);
+        $feedback->delete();
+
+        return redirect()->route('feedbacks.index')->with('success', 'Feedback deleted successfully!');
     }
 }

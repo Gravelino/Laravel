@@ -8,59 +8,57 @@ use App\Models\Rental;
 
 class RentalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $rentals = Rental::all();
+        return view('rentals.index', compact('rentals'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('rentals.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreRentalRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'start' => 'required',
+        ]);
+
+        Rental::create($validatedData);
+
+        return redirect()->route('rentals.index')->with('success', 'rental created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Rental $rental)
+    public function show($id)
     {
-        //
+        $rental = Rental::findOrFail($id);
+        return view('rentals.show', compact('rental'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Rental $rental)
+    public function edit($id)
     {
-        //
+        $rental = Rental::findOrFail($id);
+        return view('rentals.edit', compact('rental'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRentalRequest $request, Rental $rental)
+    public function update(UpdateRentalRequest $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'start' => 'required',
+        ]);
+
+        $rental = Rental::findOrFail($id);
+        $rental->update($validatedData);
+
+        return redirect()->route('rentals.index')->with('success', 'rental updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Rental $rental)
+    public function destroy($id)
     {
-        //
+        $rental = Rental::findOrFail($id);
+        $rental->delete();
+
+        return redirect()->route('rentals.index')->with('success', 'rental deleted successfully!');
     }
 }
