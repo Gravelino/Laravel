@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rental extends Model
 {
-    protected $fillable = ['start','end'];
+    protected $fillable = ['start','end', 'user_id', 'car_id'];
     
     public function user()
     {

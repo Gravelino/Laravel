@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedback extends Model
 {
-    protected $fillable = ['text','likes','dislikes'];
+    protected $fillable = ['text','likes','dislikes', 'user_id', 'car_id'];
+
+    protected $attributes = [
+        'likes' => 0,
+        'dislikes' => 0,
+    ];
 
     public function user()
     {

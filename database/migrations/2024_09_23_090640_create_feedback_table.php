@@ -16,12 +16,9 @@ return new class extends Migration
             $table->string('text');
             $table->integer('likes');
             $table->integer('dislikes');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('car_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('car_id')->constrained('cars')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
         });
     }
 

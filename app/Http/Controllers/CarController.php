@@ -22,6 +22,12 @@ class CarController extends Controller
     public function store(StoreCarRequest $request)
     {
         $validatedData = $request->validate([
+            'make' => 'required|max:25',
+            'model' => 'required|max:50',
+            'year' => 'required|min:4|max:4',
+            'location' => 'required|max:255',
+            'isAvailable' => 'required',
+            'imageUrl' => 'required',
             'costPerHour' => 'required',
         ]);
 
@@ -45,6 +51,9 @@ class CarController extends Controller
     public function update(UpdateCarRequest $request, $id)
     {
         $validatedData = $request->validate([
+            'location' => 'required|max:255',
+            'isAvailable' => 'required',
+            'imageUrl' => 'required',
             'costPerHour' => 'required',
         ]);
 

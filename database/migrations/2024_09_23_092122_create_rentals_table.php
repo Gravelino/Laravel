@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->unsignedBigInteger('car_id')->constrained('cars')->onDelete('cascade');
+            $table->foreignId('car_id')->constrained('cars')->onDelete('cascade');
             $table->timestamps();
         });
     }

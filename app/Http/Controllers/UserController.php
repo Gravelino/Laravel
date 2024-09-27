@@ -22,7 +22,12 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|unique',
+            'name' => 'required|max:25',
+            'surname' => 'required|max:30',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|max:16',
+            'phoneNumber' => 'required',
+            'isAdmin' => 'required',
         ]);
 
         User::create($validatedData);
@@ -45,7 +50,11 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $validatedData = $request->validate([
-            'email' => 'required|unique',
+            'name' => 'required|max:25',
+            'surname' => 'required|max:30',
+            'email' => 'required',
+            'phoneNumber' => 'required',
+            'isAdmin' => 'required',
         ]);
 
         $user = User::findOrFail($id);
