@@ -16,7 +16,7 @@
                 <th>Year</th>
                 <th>Location</th>
                 <th>Is Available</th>
-                <th>Cost Per Hour</th>
+                <th><a href="{{ route('cars.index', ['sortField' => 'costPerHour', 'sortOrder' => request('sortOrder') === 'asc' ? 'desc' : 'asc']) }}">Cost per hour</a></th>
             </tr>
         </thead>
         <tbody>

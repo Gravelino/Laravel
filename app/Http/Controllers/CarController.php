@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
 use App\Models\Car;
+use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cars = Car::all();
-        return view('cars.index', compact('cars'));
+        // $cars = Car::all();
+
+        $sortField = $request->get('sortField', 'costPerHour');
+        $sortOrder = $request->get('sortOrder', 'asc');
+
+        $cars = Car::orderBy($sortField, $sortOrder)->get();
+
+        return view('cars.index', compact('cars', 'sortField', 'sortOrder'));
     }
 
     public function create()
